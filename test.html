@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>test</title>
+</head>
+<style>
+	h1, h2{
+		text-align: center;
+	}
+	.test{
+		margin: 0 auto;
+		max-width: 800px;
+		border: 1px solid;
+		border-radius: 20px;
+		padding: 10px;
+	}
+	.block{
+		width: 600px;
+		max-width: 600px;
+		margin: 0 auto;
+		background: rgba(185, 176, 176, 0.418);
+		box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+		border-radius: 20px;
+		padding: 10px 20px;
+		margin-bottom: 1rem;
+	}
+	#six{
+		display: flex;
+		align-items: center;
+	}
+</style>
+<body>
+	<h1>Junior Vue.Js developer Test</h1>
+	<div class="test">
+		<div class="block">
+			<h2>1.Работа с перменными</h2>
+			<div id="one_1"></div>
+			<div id="one_2"></div>
+		</div>
+
+		<div class="block">
+			<h2>1.Работа со строками</h2>
+			<div id="two_1"></div>
+			<div id="two_2"></div>
+		</div>
+
+		<div class="block">
+			<h2>1.Работа с массивами</h2>
+			<div id="three_1"></div>
+			<div><b>3.2</b><div id="three_2"></div></div>
+		</div>
+
+		<div class="block">
+			<h2>Объекты</h2>
+			<div id="four_1"></div>
+			<div id="four_2"></div>
+		</div>
+
+		<div class="block">
+			<h2>Задачи</h2>
+			<div id="five"></div>
+			<div id="six"><input type="text" value='text'><p></p></div>
+			<div id="seven"></div>
+			<div id="eight"></div>
+		</div>
+	</div>
+	<script>
+		// 1.1
+		(function (){
+			let one_1 = document.querySelector('#one_1');
+			let a = 10, b = 2;
+			one_1.innerHTML = `<b>1.1 </b> ${a} + ${b} = ${a + b}`;
+		})();
+		// 1.2
+		(function (){
+			let one_2 = document.querySelector('#one_2');
+			let a = 17, b = 10, result;
+			let c = a - b;
+			let d = 7;
+			result = c + d;
+			one_2.innerHTML = `<b>1.2 </b> ${result}`
+			console.log('(1.2) '+result);
+		})();
+		// 2.1
+		(function (){
+			let text = document.querySelector('#two_1');
+			let str1 = 'Привет', str2 = 'Мир';
+			text.innerHTML = `<b>2.1</b> ${str1} ${str2}`;
+		})();
+		// 2.2
+		(function (){
+			let text = document.querySelector('#two_2');
+			let num = '12345', result = 0;
+			for (let i = 0; i < num.length; i++) {
+				result += parseInt(+num[i]);
+			}
+			text.innerHTML = `<b>2.2</b> ${result}`;
+			console.log('(2.2) '+result);
+		})();
+		// 3.1
+		(function (){
+			let text = document.querySelector('#three_1');
+			let arr = ['a', 'b', 'c', 'd'];
+			text.innerHTML = `<b>3.1</b> ${arr[0]} + ${arr[1]}, ${arr[2]} + ${arr[3]}`;
+		})();
+		// 3.2
+		(function (){
+			let text = document.querySelector('#three_2');
+			let arr = [];
+			for (let i = 0; i < 100; i++) {
+				arr.push( Math.floor(Math.random() * (100 - 0)) + 0) ;			
+			}
+			
+			arr.forEach(element => {
+				text.innerHTML +=  element+' ';
+			});
+		})();
+		// 4.1
+		(function (){
+			let text = document.querySelector('#four_1');
+			let obj = {a: 1, b: 2, c: 3};
+			text.innerHTML = `${obj['c']} and ${obj.c}`;
+		})();
+		// ЗАДАНИЯ
+
+		//1
+		(function (){
+			let text = document.querySelector('#five');
+			let str = '';
+			for (let i = 0; i < 10; i++) {
+				str += Math.floor(Math.random() * (10 - 1)) + 1;
+			}
+			if (parseInt(str[0]) === 1 || parseInt(str[0]) === 2 || parseInt(str[0]) === 3) {
+				text.innerHTML = `${str} и ответ ДА`;
+				console.log('задание 1: ДА');
+			}else{
+				text.innerHTML = `${str} и ответ НЕТ`;
+				console.log('задание 1: НЕТ');
+			}
+		})();
+		//2
+		(function (){
+			let input = document.querySelector('#six input');
+			let text = document.querySelector('#six p');
+			text.innerHTML = input.getAttribute('value');
+
+			input.addEventListener('keydown', function(e) {
+				text.innerHTML = e.target.value;
+				console.log('задание 2: '+text.innerHTML);
+			});
+		})();
+		//3
+		(function (){
+			let text = document.querySelector('#seven');
+			function Bomb(message, delay) {
+				this.message = message;
+				//исправление
+				setTimeout(this.blowUp(message), delay * 1000);
+			}
+			Bomb.prototype.blowUp = function() {
+				console.log('задание 2 '+this.message);
+				text.innerHTML = this.message;
+			};	
+			new Bomb('Explosion', 5);
+			
+		})();
+		//4
+		(function (){
+			let text = document.querySelector('#eight');
+
+			fetch('https://data-live.flightradar24.com/zones/fcgi/feed.js?bounds=56.84,55.27,33.48,41.48')
+			.then(response => response.json() )
+			.then(data => {
+				let count = 0;
+				for (var prop in data) {
+					if (typeof data[prop] == 'object') {
+						count ++;
+						console.log(data[prop]);
+						if(count == 3)  break;
+					}
+				}
+				// console.log('Второй самолёт: '+data['1d19fb6c']) ;
+				// console.log('Третий самолёт: '+data['1d19a2bb']) ;
+			})
+			.catch(error => console.error(error))
+		})();
+	</script>
+</body>
+</html>
